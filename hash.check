@@ -1,0 +1,7 @@
+Welcome to hash.check
+
+
+
+ [OK] 09be416790fbacceb74d9e5a72a3ff58556af14f : testfile2.txt
+
+ [ERROR] File not found: blud.txt
