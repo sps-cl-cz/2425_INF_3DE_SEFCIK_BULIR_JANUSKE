@@ -1,0 +1,28 @@
+### Function `init`
+1. **PermissionError**: Insufficient permissions to access or modify the file.###SOLVED###
+2. **FileNotFoundError**: The directory or file may not exist. ###SOLVED###
+
+### Function `sha1_calculation(pathspec)`
+- ###SOLVED###
+
+### Function `add`
+1. **PermissionError**: Insufficient permissions to access or modify the file. ###SOLVED###
+2. **FileNotFoundError**: The directory or file may not exist. ###SOLVED###
+3. **Check the return value** from `sha1_calculation(pathspec)`. ###SOLVED###
+4. **Logic misstake**: If there is a 2nd new hash to a changed file it would not delete the previus new one 
+
+### Function `remove`
+1. **PermissionError**: Insufficient permissions to access or modify the file.
+2. **FileNotFoundError**: The directory or file may not exist.
+3. **Logic misstake**: If there is more than 2 NEW HASHES this function woun't remove them
+
+### Function `status`
+1. **PermissionError**: Insufficient permissions to access or modify the file.
+2. **FileNotFoundError**: The directory or file may not exist.
+
+### Function `main`
+1. **ValueError**: Invalid input.
+
+### Errors that apply to the entire code:
+1. **ImportError**: Applies to `os`, `hashlib`, `argparse`.
+2. **OSError**: General operating system errors.
