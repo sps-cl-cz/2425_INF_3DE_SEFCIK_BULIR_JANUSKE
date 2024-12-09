@@ -39,13 +39,13 @@ KNOWN ISSUES
 4. **Logic misstake**: If there is a 2nd new hash to a changed file it would not delete the previus new one ###SOLVED###
 
 ### Function `remove`
-1. **PermissionError**: Insufficient permissions to access or modify the file.
-2. **FileNotFoundError**: The directory or file may not exist.
-3. **Logic misstake**: If there is more than 2 NEW HASHES this function woun't remove them
+1. **PermissionError**: Insufficient permissions to access or modify the file.###SOLVED###
+2. **FileNotFoundError**: The directory or file may not exist.###SOLVED###
+3. **Logic misstake**: If there is more than 2 NEW HASHES this function woun't remove them###SOLVED###
 
 ### Function `status`
-1. **PermissionError**: Insufficient permissions to access or modify the file.
-2. **FileNotFoundError**: The directory or file may not exist.
+1. **PermissionError**: Insufficient permissions to access or modify the file.###SOLVED###
+2. **FileNotFoundError**: The directory or file may not exist.###SOLVED###
 
 ### Function `main`
 1. **ValueError**: Invalid input.
