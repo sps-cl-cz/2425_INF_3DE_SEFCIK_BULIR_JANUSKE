@@ -119,44 +119,43 @@ def add(pathspec):
             return
     except FileNotFoundError:
         # Handle the case where the file is not found
-        error_message = f" {prefixes[3]} File not found: {pathspec}"
-        print(error_message)
-        with open(file_path, 'w') as file:
-            # Append the error message to the 'hash.check' file
-            file.write(f"{prefixes[2]} {old_hash} : {pathspec}")
+        print(f"{prefixes[3]} File not found: {pathspec}")
+        with open(file_path, 'a') as file:  # Use 'a' to append to the file
+            file.write(f"{prefixes[3]} File not found: {pathspec}\n")
         return
 
     try:
-        updated = False
         file_found = False
+        updated = False
         lines = []
+
         # Check if the 'hash.check' file exists and read its contents
         if os.path.exists(file_path):
             with open(file_path, 'r') as file:
                 lines = file.readlines()
 
-        # Open the 'hash.check' file for writing
+        # Open the 'hash.check' file for writing (clear old content first)
         with open(file_path, 'w') as file:
-            for i, line in enumerate(lines):
+            for line in lines:
                 if pathspec in line:
                     file_found = True
                     old_hash = line.split()[1]
                     if old_hash != fileHash:
-                        # If the hash has changed, update the entry
-                        file.write(f"\n {prefixes[2]} {old_hash} : {pathspec}")
-                        file.write(f"\n NEW HASH: {fileHash}\n")
+                        # If the hash has changed, write the updated entry
+                        file.write(f"{prefixes[2]} {old_hash} : {pathspec}\n")
+                        file.write(f"{prefixes[1]} {fileHash} : {pathspec}\n")
                         updated = True
                     else:
-                        # If the hash has not changed, keep the existing entry
+                        # If the hash hasn't changed, keep the existing entry
                         file.write(line)
-                        if i + 1 < len(lines) and "NEW HASH" in lines[i + 1]:
-                            file.write(lines[i + 1])
-                else:
+                elif "NEW HASH" not in line:
+                    # Write other lines excluding outdated "NEW HASH" entries
                     file.write(line)
+
             if not file_found:
                 # If the file was not found in the 'hash.check' file, add a new entry
-                file.write(f"\n {prefixes[1]} {fileHash} : {pathspec}\n")
-        
+                file.write(f"{prefixes[1]} {fileHash} : {pathspec}\n")
+
         if updated:
             print(f"Updated file: {prefixes[2]} {fileHash} : {pathspec}")
         elif not file_found:
@@ -176,28 +175,47 @@ def remove(pathspec):
     file_path = os.path.join(script_dir, 'hash.check')
     
     try:
+        # Check if the 'hash.check' file exists
+        if not os.path.exists(file_path):
+            print(f"File '{file_path}' does not exist.")
+            return
+
         # Read the contents of the 'hash.check' file
         with open(file_path, 'r') as file:
             lines = file.readlines()
-        
+
+        # Track whether the entry was found and removed
+        entry_found = False
+
         # Open the 'hash.check' file for writing
         with open(file_path, 'w') as file:
             skip_next = False
             for line in lines:
                 if skip_next:
+                    # Continue skipping lines if they contain "NEW HASH"
+                    if "NEW HASH" in line:
+                        continue
+                    # Stop skipping once no "NEW HASH" is encountered
                     skip_next = False
-                    continue
+
                 if pathspec in line:
-                    # Skip the next line if the current line contains the pathspec
-                    skip_next = True
+                    entry_found = True  # Mark entry as found
+                    skip_next = True  # Start skipping "NEW HASH" lines
                     continue
-                # Write the line to the file if it does not contain the pathspec
+
+                # Write the line if it does not match the pathspec or "NEW HASH"
                 file.write(line)
-        
-        print(f"Removed file entry: {pathspec}")
+
+        if entry_found:
+            print(f"Removed file entry: {pathspec}")
+        else:
+            print(f"No entry found for: {pathspec}")
+    except PermissionError:
+        print(f"Permission denied: Unable to access or modify the file '{file_path}'.")
     except Exception as e:
-        # Handle any unexpected errors
         print(f"An error occurred while removing the file entry: {e}")
+
+
 
 # Function to display the current status of tracked files
 def status():
