@@ -20,7 +20,7 @@ Je nutné, aby uživatel byl v jakémkoliv prostředí, ať je to VS CODE, cmd n
                                                                     ||                           status
                                                                     ||                           -h
                                                                     \/
-                                                                vždz zadat název skriptu
+                                                                vždy zadat název skriptu
 
 
 KNOWN ISSUES
