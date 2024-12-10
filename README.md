@@ -1,55 +1,96 @@
-# 2425_INF_3DE_SEFCIK_BULIR_JANUSKE
-K použití skriptu je potřeba mít nainstalovaný interpret Python (kód byl napsán ve verzi Python 3.13.0)
+# File Tracker Script 🚀  
+**File Tracker Script** je jednoduchý nástroj pro sledování změn souborů pomocí SHA-1 hashů. Tento program umožňuje inicializovat sledování, přidávat nové soubory, odstraňovat sledované soubory a kontrolovat aktuální stav sledovaných souborů.  
 
-=======>https://www.python.org/downloads/<=======
+## 🚀 Funkce  
+- **`init`**: Inicializuje sledování vytvořením souboru `hash.check`.  
+- **`add`**: Přidává (nebo aktualizuje) soubory ke sledování.  
+- **`remove`**: Odstraňuje soubory ze sledování.  
+- **`status`**: Zobrazuje aktuální stav sledovaných souborů.  
 
-Dále je možné pro jednodušší manipulaci použít jakýkoliv editor jako je Visual Studio Code
-Základní Python interpret a jeho konzole postačí
+---
 
-Je nutné, aby uživatel byl v jakémkoliv prostředí, ať je to VS CODE, cmd nebo Python interpret, a aby dodržel následující:
-    1. Prompt musí být vždy ve složce se skriptem.
-        Př: C:\ja\zbytek\cesty> Pokud prompt bude zde, tak je nutné, aby ve složce \cesty byl skript
-    2. dale pak se ridit samotnym scriptem ktery se spousti:
-        cesta k interpretu python, stačí jen zástupce ==> Python check.py command cesta <================== cesta k souboru se kterým se bude něco provádět
-                                                                    ||        ||
-                                                                    ||        ||
-                                                                    ||        ||
-                                                                    ||         ========> prikazy init                               
-                                                                    ||                           add
-                                                                    ||                           remove                                         
-                                                                    ||                           status
-                                                                    ||                           -h
-                                                                    \/
-                                                                vždy zadat název skriptu
+## 🛠️ Použití  
+Program se spouští přes příkazovou řádku. Níže naleznete dostupné příkazy a jejich popis.  
 
+### Inicializace  
+Vytvoří nový soubor `hash.check` pro sledování souborů. Pokud již soubor existuje, můžete jej přepsat.  
+```bash
+python tracker.py init
+```  
 
-KNOWN ISSUES
+### Přidání souboru  
+Přidá nový soubor k sledování nebo aktualizuje jeho hash, pokud se změnil obsah.  
+```bash
+python tracker.py add <cesta_k_souboru>
+```  
+Příklad:  
+```bash
+python tracker.py add test.txt
+```  
 
-### Function `init`
-1. **PermissionError**: Insufficient permissions to access or modify the file.###SOLVED###
-2. **FileNotFoundError**: The directory or file may not exist. ###SOLVED###
+### Odstranění souboru  
+Odstraní soubor ze seznamu sledovaných souborů.  
+```bash
+python tracker.py remove <cesta_k_souboru>
+```  
+Příklad:  
+```bash
+python tracker.py remove test.txt
+```  
 
-### Function `sha1_calculation(pathspec)`
-- ###SOLVED###
+### Stav sledování  
+Zobrazí aktuální stav sledovaných souborů, včetně počtu:  
+- `[OK]`: Soubory bez změn.  
+- `[CHANGED]`: Soubory, u kterých se změnil hash.  
+- `[ERROR]`: Soubory, které nelze najít.  
+```bash
+python tracker.py status
+```  
 
-### Function `add`
-1. **PermissionError**: Insufficient permissions to access or modify the file. ###SOLVED###
-2. **FileNotFoundError**: The directory or file may not exist. ###SOLVED###
-3. **Check the return value** from `sha1_calculation(pathspec)`. ###SOLVED###
-4. **Logic misstake**: If there is a 2nd new hash to a changed file it would not delete the previus new one ###SOLVED###
+---
 
-### Function `remove`
-1. **PermissionError**: Insufficient permissions to access or modify the file.###SOLVED###
-2. **FileNotFoundError**: The directory or file may not exist.###SOLVED###
-3. **Logic misstake**: If there is more than 2 NEW HASHES this function woun't remove them###SOLVED###
+## 📂 Struktura projektu  
+```
+📂 Projekt
+ ┣ 📜 tracker.py         # Hlavní soubor se skriptem
+ ┣ 📜 hash.check         # Vytvořený soubor pro sledování (po spuštění init)
+ ┗ 📜 README.md          # Tento popis projektu
+```
 
-### Function `status`
-1. **PermissionError**: Insufficient permissions to access or modify the file.###SOLVED###
-2. **FileNotFoundError**: The directory or file may not exist.###SOLVED###
+---
 
-### Function `main`
-1. **ValueError**: Invalid input.
+## 🧰 Požadavky  
+- **Python 3.6+**  
+- Moduly: `argparse`, `hashlib`, `os`
 
-### Errors that apply to the entire code:
-1. **ImportError**: Applies to `os`, `hashlib`, `argparse`.
-2. **OSError**: General operating system errors.
+---
+
+## 📝 Příklad použití  
+1. Inicializujte sledování:  
+   ```bash
+   python tracker.py init
+   ```
+2. Přidejte soubor ke sledování:  
+   ```bash
+   python tracker.py add example.txt
+   ```
+3. Zkontrolujte stav:  
+   ```bash
+   python tracker.py status
+   ```
+4. Odeberte soubor:  
+   ```bash
+   python tracker.py remove example.txt
+   ```
+
+---
+
+## 📜 Licence  
+Tento projekt je licencován pod licencí MIT.  
+
+---
+
+## 🧑‍💻 Autor  
+Šefčík
+Bulíř
+Januške
